@@ -1,5 +1,5 @@
-import React from 'react'
-import TodoComponenet from './screens/views/todoScreen'
+import React from 'react';
+import TodoComponenet from './screens/views/todoScreen';
 
 const App = () => {
   return (
