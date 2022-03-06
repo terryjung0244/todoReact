@@ -9,15 +9,18 @@ const TodoComponenet = () => {
 
   const dispatch = useDispatch();
 
-  const onClickCreateTodo = (todo) => {
-    dispatch(todoReducerCreateTodoAction(todo))
+  const onClickCreateTodo = () => {
+    dispatch(todoReducerCreateTodoAction())
   };
 
 
   return (
     <div>
-      <div onClick={() => onClickCreateTodo("onClickTodo")}>
+      <div onClick={onClickCreateTodo}>
         Click Me
+      </div>
+      <div>
+        {todoReducerSelector.todoList}
       </div>
     </div>
   )
