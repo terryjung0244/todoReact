@@ -24,7 +24,17 @@ const TodoComponenet = () => {
     dispatch(todoReducerCreateTodoInputAction({name: e.target.name, value: e.target.value}))
   }
 
-  console.log(todoReducerSelector.todoList)
+  const onClickComplete = () => {
+    console.log("complete")
+  }
+
+  const onClickDelete = () => {
+    console.log("delete")
+  }
+
+  const onClickUpdate = () => {
+    console.log("update")
+  }
 
   return (
     <div>
@@ -44,8 +54,21 @@ const TodoComponenet = () => {
       <div>
         {todoReducerSelector.todoList.map((todo, index) => {
           return (
-            <div key={index} style={{ margin: '0 10px'}}>
-              {todo.task}
+            <div key={index} style={{ 
+                display: 'flex', margin: '0 10px', justifyContent: 'space-evenly'
+              }}>
+              <div>
+                {todo.task}
+              </div>
+              <div onClick={() => onClickUpdate(todo)}>
+                Update
+              </div>
+              <div onClick={() => onClickComplete(todo)}>
+                Complete
+              </div>
+              <div onClick={() => onClickDelete(todo)}>
+                Delete
+              </div>
             </div>
           )
         })}
