@@ -2,7 +2,10 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
   todoReducerCreateTodoAction,
-  todoReducerCreateTodoInputAction
+  todoReducerCreateTodoInputAction,
+  todoReducerCreateTodoComplete,
+  todoReducerCreateTodoDelete,
+  todoReducerCreateTodoUpdate
 } from '../reducers/todoAction';
 import { TODO_CONST_STRING } from '../../services/const/generalConst';
 
@@ -21,20 +24,24 @@ const TodoComponenet = () => {
   };
 
   const onChangeTodoInput = (e) => {
-    dispatch(todoReducerCreateTodoInputAction({name: e.target.name, value: e.target.value}))
+    dispatch(todoReducerCreateTodoInputAction({
+      name: e.target.name, value: e.target.value
+    }))
   }
 
-  const onClickComplete = () => {
-    console.log("complete")
+  const onClickComplete = (todo) => {
+    dispatch(todoReducerCreateTodoComplete(todo))
   }
 
-  const onClickDelete = () => {
-    console.log("delete")
+  const onClickDelete = (todo) => {
+    dispatch(todoReducerCreateTodoDelete(todo))
   }
 
-  const onClickUpdate = () => {
-    console.log("update")
+  const onClickUpdate = (todo) => {
+    dispatch(todoReducerCreateTodoUpdate(todo))
   }
+  
+  console.log(todoReducerSelector.todoList)
 
   return (
     <div>
@@ -55,7 +62,9 @@ const TodoComponenet = () => {
         {todoReducerSelector.todoList.map((todo, index) => {
           return (
             <div key={index} style={{ 
-                display: 'flex', margin: '0 10px', justifyContent: 'space-evenly'
+                display: 'flex', margin: '0 10px', 
+                justifyContent: 'space-evenly',
+                color: (todo.isCompleted) ? 'tomato' : 'black'
               }}>
               <div>
                 {todo.task}
