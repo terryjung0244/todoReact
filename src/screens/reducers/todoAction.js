@@ -5,7 +5,8 @@ const {
   CREATE_TODO_INPUT,
   CREATE_TODO_COMPLETE,
   CREATE_TODO_UPDATE,
-  CREATE_TODO_DELETE
+  CREATE_TODO_DELETE,
+  UPDATE_TODO_INPUT
 } = TODO_ACTION_CONST;
 
 export const todoReducerCreateTodoAction = (todo) => {
@@ -17,6 +18,12 @@ export const todoReducerCreateTodoAction = (todo) => {
 export const todoReducerCreateTodoInputAction = (inputData) => {
   return {
     type: CREATE_TODO_INPUT, payload: inputData
+  }
+}
+
+export const todoReducerCreateTodoUpdateInputAction = (inputData) => {
+  return {
+    type: UPDATE_TODO_INPUT, payload: inputData
   }
 }
 

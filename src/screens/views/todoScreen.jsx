@@ -10,7 +10,8 @@ import {
 import { TODO_CONST_STRING } from '../../services/const/generalConst';
 
 const {
-  TODO_CREATE_INPUT
+  TODO_CREATE_INPUT,
+  TODO_UPDATE_INPUT
 } = TODO_CONST_STRING;
 
 const TodoComponenet = () => {
@@ -51,11 +52,11 @@ const TodoComponenet = () => {
         </div>
         <div>
           <input
-          placeholder='Something todo today?'
-          name={TODO_CREATE_INPUT}
-          value={todoReducerSelector.inputData[TODO_CREATE_INPUT]}
-          onChange={(e) => onChangeTodoInput(e)}
-        />
+            placeholder='Something todo today?'
+            name={TODO_CREATE_INPUT}
+            value={todoReducerSelector.inputData[TODO_CREATE_INPUT]}
+            onChange={(e) => onChangeTodoInput(e)}
+          />
         </div>
       </div>
       <div>
@@ -71,6 +72,14 @@ const TodoComponenet = () => {
               </div>
               <div onClick={() => onClickUpdate(todo)}>
                 Update
+              </div>
+              <div style={{ display: (todo.isUpdate) ? 'flex' : 'none' }}>
+                <input
+                  placeholder='Something todo today?'
+                  name={TODO_UPDATE_INPUT}
+                  value={todoReducerSelector.inputData[TODO_UPDATE_INPUT]}
+                  onChange={(e) => onChangeTodoInput(e)}
+                />
               </div>
               <div onClick={() => onClickComplete(todo)}>
                 Complete
