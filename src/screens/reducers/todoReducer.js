@@ -39,12 +39,18 @@ export default function todoReducer(state = initState, action) {
         break;
       case CREATE_TODO_COMPLETE:
         console.log(action.payload.task)
-        let index = draft.todoList.findIndex((todo) => (todo.id === action.payload.id))
-        draft.todoList[index].isCompleted = !draft.todoList[index].isCompleted 
+        let indexCompleted = draft.todoList.findIndex((todo) => (todo.id === action.payload.id))
+        draft.todoList[indexCompleted].isCompleted = !draft.todoList[indexCompleted].isCompleted 
         break;
       case CREATE_TODO_UPDATE:
+        console.log("update")
+
         break;
       case CREATE_TODO_DELETE:
+        console.log(action.payload)
+        let indexDelete = draft.todoList.findIndex((todo) => (todo.id === action.payload.id))
+        draft.todoList.splice(indexDelete, 1); 
+        //You can use splice to delete data in the todoList because it's array. 
         break;
       default:      
       return state;
@@ -53,3 +59,6 @@ export default function todoReducer(state = initState, action) {
 }
 
 //It needs to use push method in order to transfer data into array.                   
+
+
+
