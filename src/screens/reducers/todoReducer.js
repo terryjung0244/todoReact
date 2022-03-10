@@ -1,20 +1,18 @@
 import produce from 'immer';
-import {TODO_ACTION_CONST} from '../../services/const/actionConst';
-import { nanoid } from 'nanoid';
+import { TODO_ACTION_CONST } from "../../services/const/actionConst";
+import { nanoid } from 'nanoid'
 import { TODO_CONST_STRING } from '../../services/const/generalConst';
 
-const {
-  TODO_CREATE_INPUT,
-  TODO_UPDATE_INPUT
-} = TODO_CONST_STRING;
+const {TODO_CREATE_INPUT, TODO_UPDATE_INPUT} = TODO_CONST_STRING;
 
 const {
-  CREATE_TODO,
+  CREATE_TODO, 
   CREATE_TODO_INPUT,
-  CREATE_TODO_COMPLETE,
+  UPDATE_TODO_INPUT,
+  CREATE_TODO_COMPLETED,
   CREATE_TODO_UPDATE,
   CREATE_TODO_DELETE,
-  UPDATE_TODO_INPUT
+  CLICK_AFTER_UPDATED
 } = TODO_ACTION_CONST;
 
 const initState = {
@@ -34,38 +32,39 @@ export default function todoReducer(state = initState, action) {
           id: nanoid(),
           task: draft.inputData[TODO_CREATE_INPUT],
           isCompleted: false,
-          isUpdate: false
-        })
+          isClickedUpdate: false
+        });
         draft.inputData[TODO_CREATE_INPUT] = "";
-
         break;
       case CREATE_TODO_INPUT:
         draft.inputData[action.payload.name] = action.payload.value
         break;
-      case UPDATE_TODO_INPUT:
-        draft.todoList[indexUpdate].isUpdate = !draft.todoList[indexUpdate].isUpdate
-      case CREATE_TODO_COMPLETE:
-        console.log(action.payload.task)
-        let indexCompleted = draft.todoList.findIndex((todo) => (todo.id === action.payload.id))
-        draft.todoList[indexCompleted].isCompleted = !draft.todoList[indexCompleted].isCompleted 
+        case UPDATE_TODO_INPUT:
+          draft.inputData[action.payload.name] = action.payload.value
+          break;
+      case CREATE_TODO_COMPLETED:
+        // console.log(action.payload)
+        let indexCompleted = draft.todoList.findIndex((todo) => todo.id === action.payload.id);
+        draft.todoList[indexCompleted].isCompleted = !draft.todoList[indexCompleted].isCompleted;
         break;
       case CREATE_TODO_UPDATE:
-        let indexUpdate = draft.todoList.findIndex((todo) => (todo.id === action.payload.id))
-        draft.todoList[indexUpdate].isUpdate = !draft.todoList[indexUpdate].isUpdate 
+        let indexUpdate = draft.todoList.findIndex((todo) => todo.id === action.payload.id);
+        draft.todoList[indexUpdate].isClickedUpdate = !draft.todoList[indexUpdate].isClickedUpdate;
         break;
       case CREATE_TODO_DELETE:
-        console.log(action.payload)
-        let indexDelete = draft.todoList.findIndex((todo) => (todo.id === action.payload.id))
-        draft.todoList.splice(indexDelete, 1); 
-        //You can use splice to delete data in the todoList because it's array. 
+        let indexDelete = draft.todoList.findIndex((todo) => todo.id === action.payload.id);
+        // splice
+        draft.todoList.splice(indexDelete, 1);
+        // splice => firstIndex => 어느 인덱스 지울래
+        // secondIndex => 거기서부터 몇개 지울래
         break;
-      default:      
-      return state;
+      case CLICK_AFTER_UPDATED:
+        let indexAfterUpdate = draft.todoList.findIndex((todo) => todo.id === action.payload.id);
+        draft.todoList[indexAfterUpdate].task = draft.inputData[TODO_UPDATE_INPUT];
+        draft.todoList[indexAfterUpdate].isClickedUpdate = false;
+        break;
+        default:
+        return state;
     }
   })
 }
-
-//It needs to use push method in order to transfer data into array.                   
-
-
-
